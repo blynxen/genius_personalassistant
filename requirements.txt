@@ -1,0 +1,43 @@
+# Modelo Ollama e integração
+ollama  # Versão do Ollama SDK para uso local
+
+# Whisper para transcrição de voz
+whisper  # Instalação via PyPI, com dependências já tratadas pelo PyTorch
+
+
+# Soundfile para manipulação de áudio
+soundfile==0.10.3.post1  # Manipulação de arquivos de áudio
+
+# SpeechDevice para capturar áudio
+sounddevice==0.4.5
+
+# PyMuPDF para manipular PDFs (biblioteca atualizada)
+PyMuPDF
+
+# python-docx para manipular arquivos DOCX
+python-docx
+
+# textract para manipulação de vários tipos de documentos
+textract
+
+# pymongo para conexão com MongoDB
+pymongo
+
+# dotenv para carregar variáveis de ambiente
+python-dotenv
+
+# Bibliotecas auxiliares para scraping e buscas na web
+requests
+beautifulsoup4
+
+# Agentes de Busca e IA
+langchain
+openai
+
+# Controle do teclado e eventos para iniciar/parar gravações
+pynput
+
+# Pandas para manipulação de datasets (se necessário para DF)
+pandas
+
+langdetect
