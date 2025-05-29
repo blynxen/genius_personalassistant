@@ -1,146 +1,182 @@
-Genius as Personal Assistent
-O Genius Personal Assistent é um assistente multimodal que utiliza inteligência artificial para responder a consultas de voz, realizar buscas locais e web, e processar diversos formatos de documentos como PDFs, DOCX, e textos. O projeto inclui integração com APIs externas, como o Ollama, MongoDB e serviços de busca como Tavily e Google Search. Ele também suporta transcrição de áudio, geração de respostas em voz (TTS), moderação de conteúdo, e visualização compartilhada da tela com o usuário.
 
-Funcionalidades Principais
-Transcrição de voz: Utilizando o modelo Whisper para transcrever áudio capturado.
-Resposta por voz: Converte o texto gerado pela LLM em áudio utilizando TTS (Text-to-Speech).
-Consulta em bases de conhecimento: Faz buscas em bases de conhecimento locais (arquivos PDF, DOCX, TXT) e remotas (MongoDB).
-Moderação de conteúdo: Filtra conteúdo inapropriado em diferentes idiomas (português, inglês e espanhol).
-Busca na Web: Se não houver uma resposta na base de conhecimento, o assistente realiza uma busca na web utilizando APIs como Tavily e Google Search.
-Interação e visualização de tela: O assistente pode compartilhar a tela com o usuário, permitindo uma experiência visual durante a navegação ou execução de tarefas.
-Agentes especializados: Inclui agentes para busca de legislação, governança de dados e segurança no trabalho.
-Pré-requisitos
-Antes de começar, certifique-se de ter o seguinte instalado:
+# Genius as Personal Assistant
 
-Python 3.11 ou superior
-CUDA 11.8 (para aceleração por GPU)
-MongoDB Atlas (ou outro MongoDB configurado)
-Edge WebDriver compatível com sua versão do Microsoft Edge
-Instalação
-Passo 1: Clone o repositório
-bash
-Copiar código
-git clone xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-cd personal_assistent
-Passo 2: Crie um ambiente virtual
-bash
-Copiar código
+O **Genius Personal Assistant** é um assistente multimodal que utiliza inteligência artificial para responder a consultas de voz, realizar buscas locais e web, e processar diversos formatos de documentos como PDFs, DOCX e textos. O projeto inclui integração com APIs externas, como Ollama, MongoDB, Tavily e Google Search. Ele também suporta transcrição de áudio, geração de respostas em voz (TTS), moderação de conteúdo e visualização compartilhada da tela com o usuário.
+
+---
+
+## Funcionalidades Principais
+
+- **Transcrição de voz**: Utiliza o modelo Whisper para transcrever áudio capturado.
+- **Resposta por voz**: Converte o texto gerado pela LLM em áudio com TTS (Text-to-Speech).
+- **Consulta em bases de conhecimento**: Busca em arquivos locais (PDF, DOCX, TXT) e MongoDB.
+- **Moderação de conteúdo**: Filtra conteúdo inapropriado em português, inglês e espanhol.
+- **Busca na Web**: Realiza buscas via Tavily e Google Search quando não encontra resposta local.
+- **Interação visual**: Compartilha a tela com o usuário para navegação assistida e apoio visual.
+- **Agentes especializados**: Inclui agentes para legislação, governança de dados e segurança no trabalho.
+
+---
+
+## Pré-requisitos
+
+- Python 3.11 ou superior  
+- CUDA 11.8 (para uso com GPU)  
+- MongoDB Atlas (ou local configurado)  
+- Edge WebDriver compatível com sua versão do Microsoft Edge  
+
+---
+
+## Instalação
+
+### Passo 1: Clonar o repositório
+```bash
+git clone https://github.com/blynxen/genius_personalassistant.git
+cd genius_personalassistant
+```
+
+### Passo 2: Criar ambiente virtual
+```bash
 python -m venv venv
-source venv/bin/activate  # Linux/MacOS
-venv\Scripts\activate      # Windows
-Passo 3: Instale as dependências
-Execute o comando abaixo para instalar todas as dependências:
+# Linux/MacOS
+source venv/bin/activate
+# Windows
+venv\Scripts\activate
+```
 
-bash
-Copiar código
+### Passo 3: Instalar dependências
+```bash
 pip install -r requirements.txt
-Passo 4: Configuração do MongoDB
-Certifique-se de configurar corretamente seu MongoDB Atlas ou local. Crie um arquivo .env na raiz do projeto com as seguintes variáveis:
+```
 
-bash
-Copiar código
-MONGO_URI=mongodb+srv://<usuario>:<senha>@cluster0.mongodb.net/<seu-banco>?retryWrites=true&w=majority
-MONGO_DB_NAME=
-MONGO_COLLECTION_NAME=
-MONGO_VECTOR_INDEX=
+### Passo 4: Configurar MongoDB e variáveis
+Crie um arquivo `.env` na raiz do projeto com:
+```env
+MONGO_URI=mongodb+srv://<usuario>:<senha>@cluster.mongodb.net/<banco>
+MONGO_DB_NAME=<nome-db>
+MONGO_COLLECTION_NAME=<colecao>
+MONGO_VECTOR_INDEX=<index-vetor>
 
 NEWS_API_KEY=<sua-chave-news-api>
 TAVILY_API_KEY=<sua-chave-tavily>
 GOOGLE_API_KEY=<sua-chave-google>
-GOOGLE_CX=<seu-cx-google-search>
-Passo 5: Baixe e configure o WebDriver do Edge
-Baixe o WebDriver correto para a versão do Microsoft Edge que você está usando e configure-o no caminho correto. Coloque o arquivo msedgedriver.exe na pasta raiz do projeto ou ajuste o caminho no arquivo agents/legal_agent.py:
+GOOGLE_CX=<seu-cx-google>
+```
 
-python
-Copiar código
+### Passo 5: Configurar o WebDriver
+Baixe o `msedgedriver.exe` compatível e configure o caminho no arquivo `agents/legal_agent.py`:
+```python
 self.driver_path = r"D:/Personal_Assistent/msedgedriver.exe"
-Passo 6: Iniciar o Projeto
-Após configurar tudo, você pode iniciar o projeto com:
+```
 
-bash
-Copiar código
+### Passo 6: Executar o projeto
+```bash
 python talking_llm.py
-Arquitetura do Projeto
-bash
-Copiar código
-/Personal_Assistent/
+```
+
+---
+
+## Arquitetura do Projeto
+
+```
+/genius_personalassistant/
 │
-├── /agents/                # Agentes especializados
-│   ├── __init__.py
-│   ├── knowledge_agent.py   # Busca em base local e MongoDB
-│   ├── legal_agent.py       # Agente de legislação
-│   ├── safety_agent.py      # Agente de segurança no trabalho
-│   ├── data_governance_agent.py  # Agente de governança de dados
-│   ├── screen_interaction.py     # Controle de interação e visualização de tela do usuário
+├── agents/
+│   ├── knowledge_agent.py
+│   ├── legal_agent.py
+│   ├── safety_agent.py
+│   ├── data_governance_agent.py
+│   └── screen_interaction.py
 │
-├── /apis/                  # Integrações com APIs externas
-│   ├── __init__.py
-│   ├── mongodb.py           # Integração com MongoDB
-│   ├── openai_integration.py  # Integração com OpenAI
-│   ├── scraping_utils.py    # Funções de scraping de dados
+├── apis/
+│   ├── mongodb.py
+│   ├── openai_integration.py
+│   └── scraping_utils.py
 │
-├── /config/                # Arquivos de configuração
-│   ├── __init__.py
-│   ├── config.py            # Configurações gerais
-│   ├── .env                 # Variáveis de ambiente sensíveis
+├── config/
+│   └── config.py
 │
-├── /data/                  # Dados e arquivos de conhecimento
-│   ├── knowledge_base/      # Base de conhecimento local (PDF, DOCX, etc.)
-│   ├── voice_sampler/       # Amostras de voz para o TTS
+├── data/
+│   ├── knowledge_base/
+│   └── voice_sampler/
 │
-├── /docs/                  # Documentação do projeto
-├── /models/                # Modelos de TTS e Text-to-Image
-├── /utils/                 # Ferramentas auxiliares
-│   ├── moderation.py        # Moderação de conteúdo
-│   ├── logger.py            # Logging personalizado
+├── models/
+├── utils/
+│   ├── moderation.py
+│   └── logger.py
 │
-├── agent.py                # Arquivo principal do agente
-├── talking_llm.py          # Gerenciador do agente multimodal
-├── requirements.txt        # Dependências do projeto
-├── README.md               # Documentação do projeto
-Uso
-Ativação por palavra-chave: Use uma das palavras de ativação como "genius" ou "gênio" para ativar o assistente.
+├── talking_llm.py
+├── agent.py
+├── requirements.txt
+└── README.md
+```
 
-Comandos:
+---
 
-Pergunte sobre legislação para usar o agente de legislação.
-Pergunte sobre segurança no trabalho para consultas relacionadas a NRs.
-Pergunte sobre LGPD ou governança de dados para questões de proteção de dados.
-Caso não haja uma resposta local, o sistema buscará na web automaticamente.
-Interação com a tela:
+## Uso
 
-O assistente pode visualizar a tela com o usuário, permitindo que ele navegue junto em páginas web, visualize documentos e auxilie com atividades que envolvem interação visual.
-Utilize os comandos de ativação para pedir que o assistente "veja a tela".
-Respostas por voz: O assistente responderá em áudio utilizando o modelo TTS configurado.
+### Ativação por voz
+Utilize palavras como **"genius"** ou **"gênio"** para ativar o assistente.
 
-Moderação de conteúdo: Todo o conteúdo inapropriado é filtrado antes da resposta ser dada.
+### Exemplos de comandos
+- Pergunte sobre **legislação** para usar o agente jurídico.
+- Pergunte sobre **segurança no trabalho** para consultar NRs.
+- Pergunte sobre **LGPD ou governança** para questões de compliance.
 
-Variáveis de Ambiente
-As seguintes variáveis de ambiente devem ser configuradas no arquivo .env:
+### Interação com tela
+O assistente pode “**ver a tela**” do usuário e acompanhar sua navegação, leitura ou tarefas.
 
-MONGO_URI: URI de conexão com o MongoDB.
-MONGO_DB_NAME: Nome do banco de dados no MongoDB.
-MONGO_COLLECTION_NAME: Nome da coleção no MongoDB.
-MONGO_VECTOR_INDEX: Índice de vetores do MongoDB.
-NEWS_API_KEY: Chave da API para News.
-TAVILY_API_KEY: Chave da API Tavily para busca web.
-GOOGLE_API_KEY: Chave da API do Google para busca web.
-GOOGLE_CX: Código do motor de busca personalizado do Google.
-Testes
-Você pode testar o assistente simplesmente fazendo perguntas e verificando se o sistema transcreve corretamente o áudio, busca as respostas no MongoDB ou na web, e responde com o áudio gerado.
+### Resposta por voz
+As respostas são convertidas em áudio automaticamente com o modelo TTS.
 
-Para testar a moderação de conteúdo, tente usar palavras inapropriadas e veja se elas são filtradas corretamente.
+### Moderação
+O conteúdo é filtrado automaticamente antes de ser respondido.
 
-Para testar a interação de tela, solicite que o assistente visualize sua tela e acompanhe suas ações.
+---
 
-Contribuição
-Se desejar contribuir, faça um fork do projeto, crie uma branch, faça suas modificações e envie um pull request.
+## Variáveis de Ambiente (.env)
 
-Problemas Conhecidos
-A latência de resposta pode aumentar se a base de conhecimento local ou MongoDB for muito grande.
-Algumas buscas na web podem não retornar resultados relevantes, dependendo da qualidade da API externa utilizada.
-Futuras Implementações
-Melhorar o desempenho em bases de conhecimento grandes com otimização de consultas.
-Adicionar suporte para mais línguas no TTS.
-Implementar integração com mais serviços de busca.
-Expansão da interação com tela para inclusão de reconhecimento visual avançado.
+```env
+MONGO_URI=
+MONGO_DB_NAME=
+MONGO_COLLECTION_NAME=
+MONGO_VECTOR_INDEX=
+NEWS_API_KEY=
+TAVILY_API_KEY=
+GOOGLE_API_KEY=
+GOOGLE_CX=
+```
+
+---
+
+## Testes
+
+- Teste a transcrição de voz com perguntas faladas.
+- Teste busca em MongoDB e web.
+- Teste respostas em TTS.
+- Teste filtros de conteúdo com palavras sensíveis.
+- Teste visualização de tela pedindo "veja a tela".
+
+---
+
+## Contribuição
+
+1. Faça um fork do projeto.
+2. Crie uma nova branch (`git checkout -b minha-feature`).
+3. Commit suas mudanças (`git commit -m 'Nova feature'`).
+4. Envie um pull request.
+
+---
+
+## Problemas Conhecidos
+
+- Latência pode crescer em bases grandes.
+- Qualidade de busca depende da API utilizada.
+
+---
+
+## Futuras Implementações
+
+- Otimizar performance em grandes bases.
+- Suporte a múltiplos idiomas no TTS.
+- Mais integrações de busca web.
+- Reconhecimento visual avançado na interação de tela.
