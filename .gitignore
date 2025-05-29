@@ -1,6 +1,7 @@
 .env
 venv/
 data/knowledge_base/
+data/knowledge_base.db
 
 __pycache__/
 .ipynb_checkpoints/

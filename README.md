@@ -1,5 +1,5 @@
-DmGenius as Personal Assistent
-O DMGenius Personal Assistent é um assistente multimodal que utiliza inteligência artificial para responder a consultas de voz, realizar buscas locais e web, e processar diversos formatos de documentos como PDFs, DOCX, e textos. O projeto inclui integração com APIs externas, como o Ollama, MongoDB e serviços de busca como Tavily e Google Search. Ele também suporta transcrição de áudio, geração de respostas em voz (TTS), moderação de conteúdo, e visualização compartilhada da tela com o usuário.
+Genius as Personal Assistent
+O Genius Personal Assistent é um assistente multimodal que utiliza inteligência artificial para responder a consultas de voz, realizar buscas locais e web, e processar diversos formatos de documentos como PDFs, DOCX, e textos. O projeto inclui integração com APIs externas, como o Ollama, MongoDB e serviços de busca como Tavily e Google Search. Ele também suporta transcrição de áudio, geração de respostas em voz (TTS), moderação de conteúdo, e visualização compartilhada da tela com o usuário.
 
 Funcionalidades Principais
 Transcrição de voz: Utilizando o modelo Whisper para transcrever áudio capturado.
@@ -40,9 +40,9 @@ Certifique-se de configurar corretamente seu MongoDB Atlas ou local. Crie um arq
 bash
 Copiar código
 MONGO_URI=mongodb+srv://<usuario>:<senha>@cluster0.mongodb.net/<seu-banco>?retryWrites=true&w=majority
-MONGO_DB_NAME=dmgenius_prod
-MONGO_COLLECTION_NAME=dmgenius_kb
-MONGO_VECTOR_INDEX=dmgenius_kb_vector
+MONGO_DB_NAME=
+MONGO_COLLECTION_NAME=
+MONGO_VECTOR_INDEX=
 
 NEWS_API_KEY=<sua-chave-news-api>
 TAVILY_API_KEY=<sua-chave-tavily>
